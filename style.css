@@ -1,0 +1,56 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h1, h5 {
+	text-align: center;
+}
+
+#board {
+	--size: 75vh;
+	--padding: 5px;
+	--spacing: 2.5px;
+	height: var(--size);
+	width: var(--size);
+	padding: var(--padding);
+	margin: 25px auto;
+	background-color: #123;
+}
+
+.row {
+	width: 100%;
+	height: calc(100% / 3 - var(--padding) / 3);
+}
+
+.tile {
+	height: 100%;
+	width: calc(100% / 3 - var(--padding) / 3);
+	display: inline-block;
+	background-color: white;
+	background-image: url(/ruby.png);
+	background-size: calc(var(--size) - 2 * var(--padding));
+	background-repeat: no-repeat
+}
+
+.blank {
+	background-image: none;
+	background-color: transparent;
+}
+
+#row2 { margin: var(--spacing) 0; }
+.row .tile:nth-child(even) { margin: 0 var(--spacing); }
+
+.row .col1 { background-position-x: 0; }
+.row .col2 { background-position-x: calc((var(--size) / 3 - var(--spacing)) * -1) }
+.row .col3 { background-position-x: calc((var(--size) / 1.5 - 2 * var(--spacing)) * -1); }
+
+.row1.tile { background-position-y: 0; }
+.row2.tile { background-position-y: calc((var(--size) / 3 - var(--spacing)) * -1); }
+.row3.tile { background-position-y: calc((var(--size) / 1.5 - 2 * var(--spacing)) * -1); }
+
+.won {
+	pointer-events: none;
+	background-color: #171 !important;
+}
