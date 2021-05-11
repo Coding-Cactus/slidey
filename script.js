@@ -1,6 +1,10 @@
-function shuffletiles(tiles) {
-	
-	return tiles;
+function displayTime(d) {
+	var m = String(Math.floor(d % 3600 / 60));
+	var s = String(Math.floor(d % 3600 % 60));
+
+	if (s.length < 2) {s = "0" + s}
+
+	return m + ":" + s; 
 }
 
 function shuffleBoard(blank) {
@@ -65,7 +69,7 @@ function shuffleBoard(blank) {
 	}
 }
 
-function checkWin(blank) {
+function checkWin(blank, moves, timeStart, interval) {
 	const correctTiles = [
 		"row1 col1",
 		"row1 col2",
@@ -88,8 +92,21 @@ function checkWin(blank) {
 		}
 	}
 
+clearInterval(interval);
 	document.getElementById("board").className = "won";
+
+	if (localStorage.getItem("bestScore") === null || moves < Number(localStorage.getItem("bestScore"))) {
+		localStorage.setItem("bestScore", moves);
+		document.getElementById("bestScore").innerHTML = moves;
+	}
+
+	let time = Math.floor((new Date() - timeStart)/1000);
+	if (localStorage.getItem("bestTime") === null || time < Number(localStorage.getItem("bestTime"))) {		
+		localStorage.setItem("bestTime", time);
+		document.getElementById("bestTime").innerHTML = displayTime(time);
+	}
 }
+
 
 function play() {
 	const old_element = document.getElementById("board");
@@ -99,9 +116,16 @@ function play() {
 	document.getElementById("board").className = "";
 	let moves = 0;
 	document.getElementById("moves").innerHTML = moves;
+	let timeStart = new Date().getTime();
+	document.getElementById("time").innerHTML = "0:00";
+
 	const blank = Math.floor(Math.random() * 9);
 	document.getElementById("start").innerHTML = "restart";
-	shuffleBoard(blank);
+	shuffleBoard(blank);	
+
+	const interval = setInterval(() => {
+		document.getElementById("time").innerHTML = displayTime(Math.floor((new Date().getTime() - timeStart)/1000));
+	}, 250);
 
 	document.querySelectorAll(".tile").forEach( tile => {
 		tile.addEventListener("click", () => {
@@ -115,7 +139,7 @@ function play() {
 					tile.className = "blank tile";
 					moves++;
 					document.getElementById("moves").innerHTML = moves;
-					checkWin(blank);
+					checkWin(blank, moves, timeStart, interval);
 					return
 				}
 			} if (row > 1) {
@@ -124,7 +148,7 @@ function play() {
 					tile.className = "blank tile";
 					moves++;
 					document.getElementById("moves").innerHTML = moves;
-					checkWin(blank);
+					checkWin(blank, moves, timeStart, interval);
 					return
 				}
 			} if (col < 2) {
@@ -133,7 +157,7 @@ function play() {
 					tile.className = "blank tile";
 					moves++;
 					document.getElementById("moves").innerHTML = moves;
-					checkWin(blank);
+					checkWin(blank, moves, timeStart, interval);
 					return
 				}
 			} if (col > 0) {
@@ -142,7 +166,7 @@ function play() {
 					tile.className = "blank tile";
 					moves++;
 					document.getElementById("moves").innerHTML = moves;
-					checkWin(blank);
+					checkWin(blank, moves, timeStart, interval);
 					return
 				}
 			}
@@ -151,3 +175,13 @@ function play() {
 }
 
 document.getElementById("start").addEventListener("click", play);
+
+window.onload = () => {
+	let bestScore = localStorage.getItem("bestScore");
+	bestScore = bestScore === null ? "NA" : bestScore;
+	document.getElementById("bestScore").innerHTML = bestScore;
+	
+	let bestTime = localStorage.getItem("bestTime");
+	bestTime = bestTime === null ? "NA" : displayTime(bestTime);
+	document.getElementById("bestTime").innerHTML = bestTime;
+}
