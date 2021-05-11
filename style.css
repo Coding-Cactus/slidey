@@ -29,7 +29,7 @@ h1, h5 {
 	width: calc(100% / 3 - var(--padding) / 3);
 	display: inline-block;
 	background-color: white;
-	background-image: url(/ruby.png);
+	background-image: url(/images/ruby.png);
 	background-size: calc(var(--size) - 2 * var(--padding));
 	background-repeat: no-repeat
 }
