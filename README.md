@@ -11,3 +11,4 @@ TODO:
 - [ ] Sliding animation
 - [ ] Noises?
 - [ ] Proper styling
+- [ ] 4x4 and 5x5 mode(?)
