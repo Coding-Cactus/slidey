@@ -31,10 +31,10 @@ h5 { margin-bottom: 20px; }
 	width: calc(100% / 3 - var(--padding) / 3);
 	display: inline-block;
 	background-color: white;
-	background-image: url(/images/replit.png);
+	background-image: url(/media/replit.png);
 	background-size: calc(var(--size) - 2 * var(--padding));
 	background-repeat: no-repeat;
-	transition: transform 250ms;
+	transition: transform 150ms;
 }
 
 .blank {

@@ -9,6 +9,6 @@ TODO:
 - [x] Multiple images to choose from
 - [x] Upload your own image
 - [x] Sliding animation
-- [ ] Noises?
+- [x] Noises?
 - [ ] Proper styling
 - [ ] 4x4 and 5x5 mode(?)

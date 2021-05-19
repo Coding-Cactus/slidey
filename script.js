@@ -158,6 +158,12 @@ function _() {
 			document.getElementById("time").innerHTML = displayTime(Math.floor((new Date().getTime() - timeStart)/1000));
 		}, 250);
 
+		// dodgy way to play the sound while another is playing
+		const sound1 = new Audio('media/slide.wav');
+		const sound2 = new Audio('media/slide.wav');
+		const sound3 = new Audio('media/slide.wav');
+		const sound4 = new Audio('media/slide.wav');
+
 		document.querySelectorAll(".tile").forEach( tile => {
 			tile.addEventListener("click", () => {
 				const id = Number(tile.id);
@@ -166,6 +172,7 @@ function _() {
 
 				if (row < 3) {
 					if (document.getElementById("row"+String(row + 1)).children[col].className.includes("blank")) {
+						sound1.play();
 						tile.className += " down";
 						setTimeout(() => {
 							document.getElementById("row"+String(row + 1)).children[col].className = tile.className.replace(" down", "");
@@ -174,10 +181,11 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 250);
+						}, 150);
 					}
 				} if (row > 1) {
 					if (document.getElementById("row"+String(row - 1)).children[col].className.includes("blank")) {
+						sound2.play();
 						tile.className += " up";
 						setTimeout(() => {
 							document.getElementById("row"+String(row - 1)).children[col].className = tile.className.replace(" up", "");
@@ -186,10 +194,11 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 250);
+						}, 150);
 					}
 				} if (col < 2) {
 					if (document.getElementById("row"+String(row)).children[col+1].className.includes("blank")) {
+						sound3.play();
 						tile.className += " right";
 						setTimeout(() => {
 							document.getElementById("row"+String(row)).children[col+1].className = tile.className.replace(" right", "");
@@ -198,10 +207,11 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 250);
+						}, 150);
 					}
 				} if (col > 0) {
 					if (document.getElementById("row"+String(row)).children[col-1].className.includes("blank")) {
+						sound4.play();
 						tile.className += " left";
 						setTimeout(() => {
 							document.getElementById("row"+String(row)).children[col-1].className = tile.className.replace(" left", "");
@@ -210,7 +220,7 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 250);
+						}, 150);
 					}
 				}
 			});
