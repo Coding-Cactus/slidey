@@ -33,7 +33,8 @@ h5 { margin-bottom: 20px; }
 	background-color: white;
 	background-image: url(/images/replit.png);
 	background-size: calc(var(--size) - 2 * var(--padding));
-	background-repeat: no-repeat
+	background-repeat: no-repeat;
+	transition: transform 250ms;
 }
 
 .blank {
@@ -73,3 +74,9 @@ h5 { margin-bottom: 20px; }
 	height: 100%;
 	object-fit: cover;
 }
+
+
+.tile.right { transform: translateX(calc(var(--size) / 3 - var(--spacing))); }
+.tile.up { transform: translateY(calc(var(--size) / 3 * -1 + var(--spacing))); }
+.tile.down { transform: translateY(calc(var(--size) / 3 - var(--spacing))); }
+.tile.left { transform: translateX(calc(var(--size) / 3 * -1 + var(--spacing))); }

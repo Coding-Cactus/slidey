@@ -8,7 +8,12 @@ function _() {
 		return m + ":" + s; 
 	}
 
-	function resetBoard() {
+	function resetBoard() {		
+		const old_element = document.getElementById("board");
+		const new_element = old_element.cloneNode(true);
+		old_element.parentNode.replaceChild(new_element, old_element);
+		document.getElementById("board").className = "";
+
 		const tiles = [
 			"row1 col1",
 			"row1 col2",
@@ -161,39 +166,51 @@ function _() {
 
 				if (row < 3) {
 					if (document.getElementById("row"+String(row + 1)).children[col].className.includes("blank")) {
-						document.getElementById("row"+String(row + 1)).children[col].className = tile.className;
-						tile.className = "blank tile";
-						moves++;
-						document.getElementById("moves").innerHTML = moves;
-						checkWin(blank, moves, timeStart, interval);
-						return
+						tile.className += " down";
+						setTimeout(() => {
+							document.getElementById("row"+String(row + 1)).children[col].className = tile.className.replace(" down", "");
+							tile.className = "blank tile";
+							moves++;
+							document.getElementById("moves").innerHTML = moves;
+							checkWin(blank, moves, timeStart, interval);
+							return;
+						}, 250);
 					}
 				} if (row > 1) {
 					if (document.getElementById("row"+String(row - 1)).children[col].className.includes("blank")) {
-						document.getElementById("row"+String(row - 1)).children[col].className = tile.className;
-						tile.className = "blank tile";
-						moves++;
-						document.getElementById("moves").innerHTML = moves;
-						checkWin(blank, moves, timeStart, interval);
-						return
+						tile.className += " up";
+						setTimeout(() => {
+							document.getElementById("row"+String(row - 1)).children[col].className = tile.className.replace(" up", "");
+							tile.className = "blank tile";
+							moves++;
+							document.getElementById("moves").innerHTML = moves;
+							checkWin(blank, moves, timeStart, interval);
+							return;
+						}, 250);
 					}
 				} if (col < 2) {
 					if (document.getElementById("row"+String(row)).children[col+1].className.includes("blank")) {
-						document.getElementById("row"+String(row)).children[col+1].className = tile.className;
-						tile.className = "blank tile";
-						moves++;
-						document.getElementById("moves").innerHTML = moves;
-						checkWin(blank, moves, timeStart, interval);
-						return
+						tile.className += " right";
+						setTimeout(() => {
+							document.getElementById("row"+String(row)).children[col+1].className = tile.className.replace(" right", "");
+							tile.className = "blank tile";
+							moves++;
+							document.getElementById("moves").innerHTML = moves;
+							checkWin(blank, moves, timeStart, interval);
+							return;
+						}, 250);
 					}
 				} if (col > 0) {
 					if (document.getElementById("row"+String(row)).children[col-1].className.includes("blank")) {
-						document.getElementById("row"+String(row)).children[col-1].className = tile.className;
-						tile.className = "blank tile";
-						moves++;
-						document.getElementById("moves").innerHTML = moves;
-						checkWin(blank, moves, timeStart, interval);
-						return
+						tile.className += " left";
+						setTimeout(() => {
+							document.getElementById("row"+String(row)).children[col-1].className = tile.className.replace(" left", "");
+							tile.className = "blank tile";
+							moves++;
+							document.getElementById("moves").innerHTML = moves;
+							checkWin(blank, moves, timeStart, interval);
+							return;
+						}, 250);
 					}
 				}
 			});

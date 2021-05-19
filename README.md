@@ -8,7 +8,7 @@ TODO:
 - [x] Best score and best time
 - [x] Multiple images to choose from
 - [x] Upload your own image
-- [ ] Sliding animation
+- [x] Sliding animation
 - [ ] Noises?
 - [ ] Proper styling
 - [ ] 4x4 and 5x5 mode(?)
