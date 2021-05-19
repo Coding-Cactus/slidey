@@ -6,8 +6,8 @@ Currently only the rubby logo is one of the puzzle pictures, but the plan is to 
 
 TODO:
 - [x] Best score and best time
-- [ ] Multiple images to choose from
-- [ ] Upload your own image
+- [x] Multiple images to choose from
+- [x] Upload your own image
 - [ ] Sliding animation
 - [ ] Noises?
 - [ ] Proper styling

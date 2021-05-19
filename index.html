@@ -10,6 +10,17 @@
 		<h1>Slidey</h1>
 		<h5>Slide the tiles to correct the picture!</h5>
 
+		<p style="text-align: center;">Choose an image</p>
+		<div id="images">
+			<button data-src="images/replit.png"><img src="images/replit.png"></button>
+			<button data-src="images/ruby.png"><img src="images/ruby.png"></button>
+			<button data-src="images/1-9.png"><img src="images/1-9.png"></button>
+			<form id="img-form">
+				<input type="file" id="img-input" accept="image/*" enctype="multipart/form-data" required>
+				<button type="submit">Use Image</button>
+			</form>
+		</div>
+
 
 		<button id="start">Play</button>
 		<p>Moves: <span id="moves">0</span></p>

@@ -8,6 +8,30 @@ function _() {
 		return m + ":" + s; 
 	}
 
+	function resetBoard() {
+		const tiles = [
+			"row1 col1",
+			"row1 col2",
+			"row1 col3",
+			"row2 col1",
+			"row2 col2",
+			"row2 col3",
+			"row3 col1",
+			"row3 col2",
+			"row3 col3",
+		];
+		let boardTiles = document.getElementById("board").children;
+		for (let row = 0; row < boardTiles.length; row++) {
+			for (let col=0; col < boardTiles[row].children.length; col++) {
+				boardTiles[row].children[col].className = tiles[row*3+col] + " tile";
+			}
+		}
+
+		document.getElementById("moves").innerHTML = "0";
+		document.getElementById("time").innerHTML = "0:00";
+		document.getElementById("start").innerHTML = "Play";
+	}
+
 	function shuffleBoard(blank) {
 		const tiles = [
 			"row1 col1",
@@ -121,7 +145,7 @@ function _() {
 		document.getElementById("time").innerHTML = "0:00";
 
 		const blank = Math.floor(Math.random() * 9);
-		document.getElementById("start").innerHTML = "restart";
+		document.getElementById("start").innerHTML = "Restart";
 		shuffleBoard(blank);
 
 		clearInterval(interval);
@@ -175,7 +199,6 @@ function _() {
 			});
 		});
 	}
-
 	document.getElementById("start").addEventListener("click", play);
 
 	window.onload = () => {
@@ -186,6 +209,33 @@ function _() {
 		let bestTime = localStorage.getItem("bestTime");
 		bestTime = bestTime === null ? "NA" : displayTime(bestTime);
 		document.getElementById("bestTime").innerHTML = bestTime;
+	}
+	
+	document.querySelectorAll("#images button").forEach(button => {
+		button.addEventListener("click", () =>{
+			document.querySelectorAll(".tile").forEach(tile => {
+				tile.style.backgroundImage = "url("+button.getAttribute("data-src")+")";
+			});
+			clearInterval(interval);
+			resetBoard();
+		});
+	});
+
+	document.getElementById("img-form").onsubmit = function (e) {
+		const files = e.target.children[0].files;
+
+		var fr = new FileReader();
+        fr.onload = function () {
+			document.querySelectorAll(".tile").forEach(tile => {
+				tile.style.backgroundImage = "url("+fr.result+")";
+			});
+        }
+       fr.readAsDataURL(files[0]);
+
+		clearInterval(interval);
+		resetBoard();
+
+		e.preventDefault();
 	}
 }
 _();

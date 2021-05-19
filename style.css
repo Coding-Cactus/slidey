@@ -8,8 +8,10 @@ h1, h5 {
 	text-align: center;
 }
 
+h5 { margin-bottom: 20px; }
+
 #board {
-	--size: 75vh;
+	--size: 50vh;
 	--padding: 5px;
 	--spacing: 2.5px;
 	height: var(--size);
@@ -35,7 +37,7 @@ h1, h5 {
 }
 
 .blank {
-	background-image: none;
+	background-image: none !important;
 	background-color: transparent;
 }
 
@@ -53,4 +55,21 @@ h1, h5 {
 .won {
 	pointer-events: none;
 	background-color: #171 !important;
+}
+
+#images {
+	margin: auto;
+	width: fit-content;
+}
+
+#images > button {
+	width: 100px;
+	height: 100px;
+	cursor: pointer;
+}
+
+#images img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
