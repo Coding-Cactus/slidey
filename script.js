@@ -1,4 +1,33 @@
-function _() {
+window.onload = () => {
+	let bestScore = localStorage.getItem("bestScore");
+	bestScore = bestScore === null ? "NA" : bestScore;
+	document.getElementById("bestScore").innerHTML = bestScore;
+	
+	let bestTime = localStorage.getItem("bestTime");
+	bestTime = bestTime === null ? "NA" : displayTime(bestTime);
+	document.getElementById("bestTime").innerHTML = bestTime;
+
+	let soundOn = true;
+	let animationOn = true;
+
+	function soundToggle() {
+		soundOn = !soundOn;
+		document.getElementById("sound").checked = soundOn;
+		document.getElementById("sound2").checked = soundOn;
+	}
+
+	function animationToggle() {		
+		animationOn = !animationOn;
+		document.getElementById("animation").checked = animationOn;
+		document.getElementById("animation2").checked = animationOn;
+	}
+
+	document.getElementById("sound").addEventListener("change", soundToggle);
+	document.getElementById("sound2").addEventListener("change", soundToggle);
+	document.getElementById("animation").addEventListener("change", animationToggle);
+	document.getElementById("animation2").addEventListener("change", animationToggle);
+
+
 	function displayTime(d) {
 		var m = String(Math.floor(d % 3600 / 60));
 		var s = String(Math.floor(d % 3600 % 60));
@@ -170,8 +199,14 @@ function _() {
 
 				if (row < 3) {
 					if (document.getElementById("row"+String(row + 1)).children[col].className.includes("blank")) {
-						sound.play();
-						tile.className += " down";
+						if (document.getElementById("sound").checked) {
+							sound.play();
+						}
+						let time = 0;
+						if (document.getElementById("animation").checked) {
+							time = 150;
+							tile.className += " down";
+						}
 						setTimeout(() => {
 							document.getElementById("row"+String(row + 1)).children[col].className = tile.className.replace(" down", "");
 							tile.className = "blank tile";
@@ -179,12 +214,18 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 150);
+						}, time);
 					}
 				} if (row > 1) {
 					if (document.getElementById("row"+String(row - 1)).children[col].className.includes("blank")) {
-						sound.play();
-						tile.className += " up";
+						if (document.getElementById("sound").checked) {
+							sound.play();
+						}
+						let time = 0;
+						if (document.getElementById("animation").checked) {
+							time = 150;
+							tile.className += " up";
+						}
 						setTimeout(() => {
 							document.getElementById("row"+String(row - 1)).children[col].className = tile.className.replace(" up", "");
 							tile.className = "blank tile";
@@ -192,12 +233,18 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 150);
+						}, time);
 					}
 				} if (col < 2) {
 					if (document.getElementById("row"+String(row)).children[col+1].className.includes("blank")) {
-						sound.play();
-						tile.className += " right";
+						if (document.getElementById("sound").checked) {
+							sound.play();
+						}
+						let time = 0;
+						if (document.getElementById("animation").checked) {
+							time = 150;
+							tile.className += " right";
+						}
 						setTimeout(() => {
 							document.getElementById("row"+String(row)).children[col+1].className = tile.className.replace(" right", "");
 							tile.className = "blank tile";
@@ -205,12 +252,18 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 150);
+						}, time);
 					}
 				} if (col > 0) {
 					if (document.getElementById("row"+String(row)).children[col-1].className.includes("blank")) {
-						sound.play();
-						tile.className += " left";
+						if (document.getElementById("sound").checked) {
+							sound.play();
+						}
+						let time = 0;
+						if (document.getElementById("animation").checked) {
+							time = 150;
+							tile.className += " left";
+						}
 						setTimeout(() => {
 							document.getElementById("row"+String(row)).children[col-1].className = tile.className.replace(" left", "");
 							tile.className = "blank tile";
@@ -218,23 +271,13 @@ function _() {
 							document.getElementById("moves").innerHTML = moves;
 							checkWin(blank, moves, timeStart, interval);
 							return;
-						}, 150);
+						}, time);
 					}
 				}
 			});
 		});
 	}
 	document.getElementById("start").addEventListener("click", play);
-
-	window.onload = () => {
-		let bestScore = localStorage.getItem("bestScore");
-		bestScore = bestScore === null ? "NA" : bestScore;
-		document.getElementById("bestScore").innerHTML = bestScore;
-		
-		let bestTime = localStorage.getItem("bestTime");
-		bestTime = bestTime === null ? "NA" : displayTime(bestTime);
-		document.getElementById("bestTime").innerHTML = bestTime;
-	}
 	
 	document.querySelectorAll("#images button").forEach(button => {
 		button.addEventListener("click", () =>{
@@ -245,10 +288,18 @@ function _() {
 			resetBoard();
 		});
 	});
+	document.querySelectorAll("#mobile-images button").forEach(button => {
+		button.addEventListener("click", () =>{
+			document.querySelectorAll(".tile").forEach(tile => {
+				tile.style.backgroundImage = "url("+button.getAttribute("data-src")+")";
+			});
+			clearInterval(interval);
+			resetBoard();
+		});
+	});
 
-	document.getElementById("img-form").onsubmit = function (e) {
-		const files = e.target.children[0].files;
-
+	document.getElementById("img-input").onchange = function (e) {
+		const files = e.target.files;
 		var fr = new FileReader();
         fr.onload = function () {
 			document.querySelectorAll(".tile").forEach(tile => {
@@ -256,11 +307,21 @@ function _() {
 			});
         }
        fr.readAsDataURL(files[0]);
-
 		clearInterval(interval);
 		resetBoard();
-
+		e.preventDefault();
+	}
+	document.getElementById("mobile-img-input").onchange = function (e) {
+		const files = e.target.files;
+		var fr = new FileReader();
+        fr.onload = function () {
+			document.querySelectorAll(".tile").forEach(tile => {
+				tile.style.backgroundImage = "url("+fr.result+")";
+			});
+        }
+       fr.readAsDataURL(files[0]);
+		clearInterval(interval);
+		resetBoard();
 		e.preventDefault();
 	}
 }
-_();

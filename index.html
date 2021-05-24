@@ -10,41 +10,88 @@
 		<h1>Slidey</h1>
 		<h5>Slide the tiles to correct the picture!</h5>
 
-		<p style="text-align: center;">Choose an image</p>
-		<div id="images">
-			<button data-src="media/replit.png"><img src="media/replit.png"></button>
-			<button data-src="media/ruby.png"><img src="media/ruby.png"></button>
-			<button data-src="media/1-9.png"><img src="media/1-9.png"></button>
-			<form id="img-form">
-				<input type="file" id="img-input" accept="image/*" enctype="multipart/form-data" required>
-				<button type="submit">Use Image</button>
-			</form>
-		</div>
+		<main>
+			<div id="scores"><!--
+				--><div id="current"><!--
+					--><p>Moves: <span id="moves">0</span></p><!--
+					--><p>Time: <span id="time">0:00</span></p><!--
+				--></div><!--
+				--><div id="best"><!--
+					--><p>Best Score: <span id="bestScore">NA</span></p><!--
+					--><p>Best Time: <span id="bestTime">NA</span></p><!--
+				--></div><!--
+			--></div>
 
+			<div id="image-select">
+				<h4>Choose an image</h4>
+				<div id="images">
+					<button data-src="media/replit.png"><img src="media/replit.png"></button>
+					<button data-src="media/ruby.png"><img src="media/ruby.png"></button>
+					<button data-src="media/github.png"><img src="media/github.png"></button>
+					
+					<label for="img-input" class="img-label">Upload Image</label>
+					<input id="img-input" type="file">
+				</div>
+			</div>
+			
 
-		<button id="start">Play</button>
-		<p>Moves: <span id="moves">0</span></p>
-		<p>Time: <span id="time">0:00</span></p>
-		<p>Best Score: <span id="bestScore">NA</span></p>
-		<p>Best Time: <span id="bestTime">NA</span></p>
+			<div id="board"><!--
+				--><div class="row" id="row1"><!--
+					--><div class="tile row1 col1" id="1"></div><!--
+					--><div class="tile row1 col2" id="2"></div><!--
+					--><div class="tile row1 col3" id="3"></div><!--
+				--></div><!--
+				--><div class="row" id="row2"><!--
+					--><div class="tile row2 col1" id="4"></div><!--
+					--><div class="tile row2 col2" id="5"></div><!--
+					--><div class="tile row2 col3" id="6"></div><!--
+				--></div><!--
+				--><div class="row" id="row3"><!--
+					--><div class="tile row3 col1" id="7"></div><!--
+					--><div class="tile row3 col2" id="8"></div><!--
+					--><div class="tile row3 col3" id="9"></div><!--
+				--></div><!--
+			--></div>
 
-		<div id="board"><!--
-			--><div class="row" id="row1"><!--
-				--><div class="tile row1 col1" id="1"></div><!--
-				--><div class="tile row1 col2" id="2"></div><!--
-				--><div class="tile row1 col3" id="3"></div><!--
-			--></div><!--
-			--><div class="row" id="row2"><!--
-				--><div class="tile row2 col1" id="4"></div><!--
-				--><div class="tile row2 col2" id="5"></div><!--
-				--><div class="tile row2 col3" id="6"></div><!--
-			--></div><!--
-			--><div class="row" id="row3"><!--
-				--><div class="tile row3 col1" id="7"></div><!--
-				--><div class="tile row3 col2" id="8"></div><!--
-				--><div class="tile row3 col3" id="9"></div><!--
-			--></div><!--
-		--></div>
+			<div id="settings">
+				<div id="preferences">
+					<h4>Preferences</h4>
+					<div>
+						<input type="checkbox" id="animation" name="animation" checked>
+						<label for="animation"> Sliding Animation</label>
+					</div>
+					<div>
+						<input type="checkbox" id="sound" name="sound" checked>
+						<label for="sound"> Sliding Sound</label>
+					</div>
+				</div>
+			</div>
+			
+			<button id="start">Play</button>
+
+			<div id="mobile-options">
+				<div id="mobile-images">
+					<h4>Choose an image</h4>
+					<button data-src="media/replit.png"><img src="media/replit.png"></button>
+					<button data-src="media/ruby.png"><img src="media/ruby.png"></button>
+					<button data-src="media/github.png"><img src="media/github.png"></button>
+					
+					<label for="mobile-img-input" class="img-label">Upload Image</label>
+					<input id="mobile-img-input" type="file">
+				</div>
+				<div id="mobile-preferences">					
+					<h4>Preferences</h4>
+					<div>
+						<input type="checkbox" id="animation2" name="animation" checked>
+						<label for="animation2"> Sliding Animation</label>
+					</div>
+					<div>
+						<input type="checkbox" id="sound2" name="sound" checked>
+						<label for="sound2"> Sliding Sound</label>
+					</div>
+				</div>
+			</div>
+		</main>
 
 		
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.1/howler.min.js" integrity="sha512-L6Z/YtIPQ7eU3BProP34WGU5yIRk7tNHk7vaC2dB1Vy1atz6wl9mCkTPPZ2Rn1qPr+vY2mZ9odZLdGYuaBk7dQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
