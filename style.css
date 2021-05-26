@@ -24,19 +24,23 @@ main {
 	height: var(--size);
 	width: var(--size);
 	padding: var(--padding);
-	margin: 25px auto;
+	margin: 5px auto;
 	background-color: #123;
 	display: inline-block;
 }
 
+.x3 { --mode: 3; }
+.x4 { --mode: 4; }
+.x5 { --mode: 5; }
+
 .row {
 	width: 100%;
-	height: calc(100% / 3 - var(--padding) / 3);
+	height: calc(100% / var(--mode) - var(--spacing) * (1 - 1 / var(--mode)));
 }
 
 .tile {
 	height: 100%;
-	width: calc(100% / 3 - var(--padding) / 3);
+	width: calc(100% / var(--mode) - var(--spacing) * (1 - 1 / var(--mode)));
 	display: inline-block;
 	background-color: white;
 	background-image: url(/media/replit.png);
@@ -47,30 +51,35 @@ main {
 
 .blank {
 	background-image: none !important;
-	background-color: transparent;
+	background-color: transparent !important;
 }
 
-#row2 { margin: var(--spacing) 0; }
-.row .tile:nth-child(even) { margin: 0 var(--spacing); }
+.row:not(:first-child) { margin-top: var(--spacing); }
+.row .tile:not(:first-child) { margin-left: var(--spacing); }
 
 .row .col1 { background-position-x: 0; }
-.row .col2 { background-position-x: calc((var(--size) / 3 - var(--spacing)) * -1) }
-.row .col3 { background-position-x: calc((var(--size) / 1.5 - 2 * var(--spacing)) * -1); }
+.row .col2 { background-position-x: calc((var(--size) / var(--mode) - var(--spacing)) * -1) }
+.row .col3 { background-position-x: calc((var(--size) / (var(--mode) / 2) - 2 * var(--spacing)) * -1); }
+.row .col4 { background-position-x: calc((var(--size) / (var(--mode) / 3) - 3 * var(--spacing)) * -1); }
+.row .col5 { background-position-x: calc((var(--size) / (var(--mode) / 4) - 4 * var(--spacing)) * -1); }
 
 .row1.tile { background-position-y: 0; }
-.row2.tile { background-position-y: calc((var(--size) / 3 - var(--spacing)) * -1); }
-.row3.tile { background-position-y: calc((var(--size) / 1.5 - 2 * var(--spacing)) * -1); }
+.row2.tile { background-position-y: calc((var(--size) / var(--mode) - var(--spacing)) * -1); }
+.row3.tile { background-position-y: calc((var(--size) / (var(--mode) / 2) - 2 * var(--spacing)) * -1); }
+.row4.tile { background-position-y: calc((var(--size) / (var(--mode) / 3) - 3 * var(--spacing)) * -1); }
+.row5.tile { background-position-y: calc((var(--size) / (var(--mode) / 4) - 4 * var(--spacing)) * -1); }
+
+.tile.right { transform: translateX(calc(var(--size) / var(--mode) - var(--spacing))); }
+.tile.left { transform: translateX(calc(var(--size) / var(--mode) * -1 + var(--spacing))); }
+.tile.up { transform: translateY(calc(var(--size) / var(--mode) * -1 + var(--spacing))); }
+.tile.down { transform: translateY(calc(var(--size) / var(--mode) - var(--spacing))); }
+
+.x3 .row .col4, .x3 .row .col5, .x3 #row4, .x3 #row5, .x4 .row .col5, .x4 #row5 { display: none !important; }
 
 .won {
 	pointer-events: none;
 	background-color: #171 !important;
 }
-
-
-.tile.right { transform: translateX(calc(var(--size) / 3 - var(--spacing))); }
-.tile.up { transform: translateY(calc(var(--size) / 3 * -1 + var(--spacing))); }
-.tile.down { transform: translateY(calc(var(--size) / 3 - var(--spacing))); }
-.tile.left { transform: translateX(calc(var(--size) / 3 * -1 + var(--spacing))); }
 
 #image-select, #settings {
 	--padding: 10px;
@@ -113,6 +122,7 @@ main {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	border-radius: 22.5%;
 }
 
 label {
@@ -143,7 +153,11 @@ label {
 	display: none;
 }
 
-#preferences h4 {
+#preferences {
+	margin-top: 20px;
+}
+
+#preferences h4, #mode h4 {
 	margin-bottom: 10px;
 }
 
@@ -180,12 +194,13 @@ input[type="checkbox"]:checked::before, input[type="radio"]:checked::before {
 }
 
 input[type="radio"]:checked::before {
-	content: "•";	
-	transform: translateY(-50%) translateX(-50%);
+	content: "•";
+	font-size: 150%;
+	top: 36%;
 }
 
 input[type="radio"] {
-	border-radius: 35%;
+	border-radius: 50%;
 }
 
 #start {
@@ -200,8 +215,7 @@ input[type="radio"] {
 	font-weight: 600;
 	transition: background-color 0.3s;
 	border: none;
-	margin: 0 auto;
-	margin-top: -20px;
+	margin: auto;
 }
 
 #start:hover {
@@ -210,7 +224,7 @@ input[type="radio"] {
 
 #scores {
 	width: var(--size);
-	margin: -20px auto;
+	margin: auto;
 	margin-top: 20px;
 }
 
@@ -233,7 +247,7 @@ input[type="radio"] {
 
 #mobile-options { display: none; }
 
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 1000px) {
 	h1 { font-size: 30px; }
 	h5 { font-size: 10px; }
 
@@ -257,7 +271,7 @@ input[type="radio"] {
 		margin-right: 1vw;
 	}
 
-	#mobile-images {margin: auto; }
+	#mobile-images { margin: auto; }
 
 	.img-label {
 		display: block;

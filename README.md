@@ -9,4 +9,5 @@ TODO:
 - [x] Sliding animation
 - [x] Noises?
 - [x] Proper styling
-- [ ] 4x4 and 5x5 mode(?)
+- [x] 4x4 and 5x5 mode(?)
+- [ ] meta tags and stuff

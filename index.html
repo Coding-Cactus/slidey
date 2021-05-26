@@ -27,7 +27,7 @@
 				<div id="images">
 					<button data-src="media/replit.png"><img src="media/replit.png"></button>
 					<button data-src="media/ruby.png"><img src="media/ruby.png"></button>
-					<button data-src="media/github.png"><img src="media/github.png"></button>
+					<button data-src="media/cactus.png"><img src="media/cactus.png"></button>
 					
 					<label for="img-input" class="img-label">Upload Image</label>
 					<input id="img-input" type="file">
@@ -35,25 +35,60 @@
 			</div>
 			
 
-			<div id="board"><!--
+			<div id="board" class="x3"><!--
 				--><div class="row" id="row1"><!--
 					--><div class="tile row1 col1" id="1"></div><!--
 					--><div class="tile row1 col2" id="2"></div><!--
 					--><div class="tile row1 col3" id="3"></div><!--
+					--><div class="tile row1 col4" id="4"></div><!--
+					--><div class="tile row1 col5" id="5"></div><!--
 				--></div><!--
 				--><div class="row" id="row2"><!--
-					--><div class="tile row2 col1" id="4"></div><!--
-					--><div class="tile row2 col2" id="5"></div><!--
-					--><div class="tile row2 col3" id="6"></div><!--
+					--><div class="tile row2 col1" id="6"></div><!--
+					--><div class="tile row2 col2" id="7"></div><!--
+					--><div class="tile row2 col3" id="8"></div><!--
+					--><div class="tile row2 col4" id="9"></div><!--
+					--><div class="tile row2 col5" id="10"></div><!--
 				--></div><!--
 				--><div class="row" id="row3"><!--
-					--><div class="tile row3 col1" id="7"></div><!--
-					--><div class="tile row3 col2" id="8"></div><!--
-					--><div class="tile row3 col3" id="9"></div><!--
+					--><div class="tile row3 col1" id="11"></div><!--
+					--><div class="tile row3 col2" id="12"></div><!--
+					--><div class="tile row3 col3" id="13"></div><!--
+					--><div class="tile row3 col4" id="14"></div><!--
+					--><div class="tile row3 col5" id="15"></div><!--
+				--></div><!--
+				--><div class="row" id="row4"><!--
+					--><div class="tile row4 col1" id="16"></div><!--
+					--><div class="tile row4 col2" id="17"></div><!--
+					--><div class="tile row4 col3" id="18"></div><!--
+					--><div class="tile row4 col4" id="19"></div><!--
+					--><div class="tile row4 col5" id="20"></div><!--
+				--></div><!--
+				--><div class="row" id="row5"><!--
+					--><div class="tile row5 col1" id="21"></div><!--
+					--><div class="tile row5 col2" id="22"></div><!--
+					--><div class="tile row5 col3" id="23"></div><!--
+					--><div class="tile row5 col4" id="24"></div><!--
+					--><div class="tile row5 col5" id="25"></div><!--
 				--></div><!--
 			--></div>
 
 			<div id="settings">
+				<div id="mode">
+					<h4>Mode</h4>
+					<div>
+						<input type="radio" id="3x3" name="mode" checked>
+						<label for="3x3"> 3x3</label>
+					</div>
+					<div>
+						<input type="radio" id="4x4" name="mode">
+						<label for="4x4"> 4x4</label>
+					</div>
+					<div>
+						<input type="radio" id="5x5" name="mode">
+						<label for="5x5"> 5x5</label>
+					</div>					
+				</div>
 				<div id="preferences">
 					<h4>Preferences</h4>
 					<div>
@@ -74,10 +109,25 @@
 					<h4>Choose an image</h4>
 					<button data-src="media/replit.png"><img src="media/replit.png"></button>
 					<button data-src="media/ruby.png"><img src="media/ruby.png"></button>
-					<button data-src="media/github.png"><img src="media/github.png"></button>
+					<button data-src="media/cactus.png"><img src="media/cactus.png"></button>
 					
 					<label for="mobile-img-input" class="img-label">Upload Image</label>
 					<input id="mobile-img-input" type="file">
+				</div>
+				<div id="mobile-mode">
+					<h4>Mode</h4>
+					<div>
+						<input type="radio" id="mobile-3x3" name="mobile-mode" checked>
+						<label for="mobile-3x3"> 3x3</label>
+					</div>
+					<div>
+						<input type="radio" id="mobile-4x4" name="mobile-mode">
+						<label for="mobile-4x4"> 4x4</label>
+					</div>
+					<div>
+						<input type="radio" id="mobile-5x5" name="mobile-mode">
+						<label for="mobile-5x5"> 5x5</label>
+					</div>					
 				</div>
 				<div id="mobile-preferences">					
 					<h4>Preferences</h4>
