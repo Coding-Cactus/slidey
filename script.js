@@ -46,6 +46,7 @@ window.onload = () => {
 		bestTime = bestTime === null ? "NA" : displayTime(bestTime);
 		document.getElementById("bestTime").innerHTML = bestTime;
 
+		clearInterval(interval);
 		resetBoard();
 	}
 
@@ -58,8 +59,8 @@ window.onload = () => {
 
 
 	function displayTime(d) {
-		var m = String(Math.floor(d % 3600 / 60));
-		var s = String(Math.floor(d % 3600 % 60));
+		let s = String(d % 60);
+		let m = String(Math.floor(d / 60));
 
 		if (s.length < 2) {s = "0" + s}
 
@@ -174,7 +175,7 @@ window.onload = () => {
 	}
 
 	let interval = 0;
-	function play() {
+	document.getElementById("start").addEventListener("click", () => {
 		const old_element = document.getElementById("board");
 		const new_element = old_element.cloneNode(true);
 		old_element.parentNode.replaceChild(new_element, old_element);
@@ -289,8 +290,7 @@ window.onload = () => {
 				}
 			});
 		});
-	}
-	document.getElementById("start").addEventListener("click", play);
+	});
 	
 	document.querySelectorAll("#images button").forEach(button => {
 		button.addEventListener("click", () =>{

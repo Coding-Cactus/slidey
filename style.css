@@ -12,7 +12,7 @@ h5 { font-size: 2vh; }
 h1, h5 { text-align: center; }
 
 main {
-	width: fit-content;
+	width: max-content;
 	margin: auto;
 	--size: 65vh;
 }
@@ -49,11 +49,6 @@ main {
 	transition: transform 150ms;
 }
 
-.blank {
-	background-image: none !important;
-	background-color: transparent !important;
-}
-
 .row:not(:first-child) { margin-top: var(--spacing); }
 .row .tile:not(:first-child) { margin-left: var(--spacing); }
 
@@ -76,6 +71,11 @@ main {
 
 .x3 .row .col4, .x3 .row .col5, .x3 #row4, .x3 #row5, .x4 .row .col5, .x4 #row5 { display: none !important; }
 
+.blank {
+	background-image: none !important;
+	background-color: transparent !important;
+}
+
 .won {
 	pointer-events: none;
 	background-color: #171 !important;
@@ -96,11 +96,11 @@ main {
 
 #images {
 	margin: auto;
-	width: fit-content;
+	width: max-content;
 }
 
 #images > button, #images label {
-	--width: calc((var(--size) / 3 - (var(--padding) * 2)) / 1.25);
+	--width: calc((var(--size) / 3.6 - (var(--padding) * 2)) / 1.25);
 }
 
 #images > button, #mobile-images > button {
@@ -142,6 +142,7 @@ label {
 	padding: 5px;
 	border-radius: 5px;
 	font-weight: 600;
+	font-size: calc(var(--size) / 40);
 	transition: background-color 0.3s;
 }
 
@@ -265,8 +266,8 @@ input[type="radio"] {
 	}
 
 	#mobile-images > button {
-		width: 30vw;
-		height: 30vw;
+		width: 22.5vw;
+		height: 22.5vw;
 		display: inline-block;
 		margin-right: 1vw;
 	}
