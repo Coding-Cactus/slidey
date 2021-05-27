@@ -29,7 +29,7 @@ Recreation of the classic picture sliding puzzle thingy.
 - Upload your own image
 - Sliding animation
 - Sliding sound
-- Ability to enable/disable the animation
+- Ability to enable/disable the animations and sounds
 - Best score and time for each mode are remembered
 - Fully responsive
 - Fun!
