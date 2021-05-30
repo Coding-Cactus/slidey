@@ -337,4 +337,122 @@ window.onload = () => {
 		resetBoard();
 		e.preventDefault();
 	}
+
+
+
+	let bgInterval;
+	function background() {
+		document.getElementById("background").innerHTML = "";
+		clearInterval(bgInterval);
+
+		const cols = Math.ceil(window.innerWidth / 175);
+		const rows = Math.ceil(window.innerHeight / 175);
+		const randBlank = Math.floor(Math.random() * (cols*rows));
+
+		const colours = ["#cc0000bb", "#00cc00bb", "#0000ccbb", "#cccc00bb", "#cc00ccbb", "#00ccccbb"]
+		for (let r = 1; r <= rows; r++) {
+			let row = document.createElement("div");
+			row.id = "bg-row"+r;
+			row.className = "bg-row"
+			document.getElementById("background").appendChild(row);
+			for (let c = 1; c <= cols; c++) {
+				let col = document.createElement("div");
+				document.getElementById("bg-row"+r).appendChild(col);
+			}
+		}
+
+		for (let r = 1; r <= rows; r++) {
+			for (let c = 1; c <= cols; c++) {
+				col = document.getElementById("bg-row"+r).children[c-1];
+				if ((r-1)*cols + c !== randBlank) {
+					col.className = "bg-tile bg-col" + c;
+					col.style.backgroundColor = colours[Math.floor(Math.random() * colours.length)];
+					let above, right, down, left;
+					if (r > 1) {
+						above =  document.getElementById("bg-row"+(r-1)).children[c-1].style.backgroundColor;
+					}
+					if (c < cols) {
+						right = document.getElementById("bg-row"+r).children[c].style.backgroundColor;
+					}
+					if (r < rows) {
+						below = document.getElementById("bg-row"+(r+1)).children[c-1].style.backgroundColor;
+					}
+					if (c > 1) {
+						left = document.getElementById("bg-row"+r).children[c-2].style.backgroundColor;
+					}
+					while (
+						col.style.backgroundColor === above ||
+						col.style.backgroundColor === right ||
+						col.style.backgroundColor === below ||
+						col.style.backgroundColor === left
+					) {
+						col.style.backgroundColor = colours[Math.floor(Math.random() * colours.length)];
+					}
+				} else {
+					col.className = "bg-tile bg-blank bg-col"+c;
+				}
+			}
+		}
+
+		let last_direction;
+		bgInterval = setInterval(() => {
+			const blank = document.querySelector(".bg-blank");
+			const blankRow = Number(blank.parentElement.id.replace("bg-row", ""));
+			const blankCol = Number(blank.className.replace("bg-tile bg-blank bg-col", ""));
+			let moved = false;
+			while (!moved) {
+				let direction = Math.floor(Math.random() * 4);
+				while (direction === 3-last_direction) {
+					direction = Math.floor(Math.random() * 4);
+				}
+				if (direction === 0 && blankRow < rows) {
+					moved = true;
+					let tile = document.getElementById("bg-row"+String(blankRow + 1)).children[blankCol-1];
+					tile.className += " up";
+					setTimeout(() => {
+						blank.style.backgroundColor = tile.style.backgroundColor;
+						blank.className = "bg-tile bg-col"+blankCol;
+						tile.className = "bg-tile bg-blank bg-col"+blankCol;
+						tile.backgroundColor = "";
+						last_direction = direction;
+					}, 500);
+				} else if (direction === 1 && blankCol < cols) {
+					moved = true;
+					let tile = document.getElementById("bg-row"+blankRow).children[blankCol];
+					tile.className += " left";
+					setTimeout(() => {
+						blank.style.backgroundColor = tile.style.backgroundColor;
+						blank.className = "bg-tile bg-col"+blankCol;
+						tile.className = "bg-tile bg-blank bg-col"+(blankCol+1);
+						tile.backgroundColor = "";
+						last_direction = direction;
+					}, 500);
+				} else if (direction === 2 && blankCol > 1) {
+					moved = true;
+					let tile = document.getElementById("bg-row"+blankRow).children[blankCol-2];
+					tile.className += " right";
+					setTimeout(() => {
+						blank.style.backgroundColor = tile.style.backgroundColor;
+						blank.className = "bg-tile bg-col"+blankCol;
+						tile.className = "bg-tile bg-blank bg-col"+(blankCol-1);
+						tile.backgroundColor = "";
+						last_direction = direction;
+					}, 500);
+				} else if (direction === 3 && blankRow > 1) {
+					moved = true;
+					let tile = document.getElementById("bg-row"+String(blankRow - 1)).children[blankCol-1];
+					tile.className += " down";
+					setTimeout(() => {
+						blank.style.backgroundColor = tile.style.backgroundColor;
+						blank.className = "bg-tile bg-col"+blankCol;
+						tile.className = "bg-tile bg-blank bg-col"+blankCol;
+						tile.backgroundColor = "";
+						last_direction = direction;
+					}, 500);
+				}
+			}
+		}, 1000);
+	}
+	background();
+	window.addEventListener("resize", background);
 }

@@ -11,6 +11,11 @@ h1 { font-size: 5vh; }
 h5 { font-size: 2vh; }
 h1, h5 { text-align: center; }
 
+h1, h5, #scores {
+	color: #fff;
+	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 main {
 	width: max-content;
 	margin: auto;
@@ -25,7 +30,8 @@ main {
 	width: var(--size);
 	padding: var(--padding);
 	margin: 5px auto;
-	background-color: #123;
+	background-color: rgba(200, 200, 200, 0.85);
+	border-radius: var(--padding);
 	display: inline-block;
 }
 
@@ -78,7 +84,7 @@ main {
 
 .won {
 	pointer-events: none;
-	background-color: #171 !important;
+	background-color: rgba(0, 225, 0, 0.85) !important;
 }
 
 #image-select, #settings {
@@ -88,7 +94,7 @@ main {
 	width: calc((var(--size) / 3 + (var(--padding)) * 2) / 1.25);
 	height: var(--size);
 	vertical-align: middle;
-	background-color: rgba(200, 200, 200, 0.3);
+	background-color: rgba(200, 200, 200, 0.85);
 	padding: var(--padding);
 	border-radius: calc(var(--padding) / 2);
 	position: relative;
@@ -290,3 +296,35 @@ input[type="radio"] {
 		height: 15px;
 	}
 }
+
+
+
+#background {
+	position: fixed;
+	height: 100vh;
+	width: 100vw;
+	z-index: -100;
+	overflow: hidden;
+}
+
+.bg-row {
+	height: 175px;
+	width: 100vw;
+	white-space: nowrap;
+}
+
+.bg-tile {
+	width: 175px;
+	height: 100%;
+	display: inline-block;
+	transition: transform 500ms;
+}
+
+.bg-blank {
+	background-color: transparent !important;
+}
+
+.bg-tile.up { transform: translateY(-175px); }
+.bg-tile.down { transform: translateY(175px); }
+.bg-tile.left { transform: translateX(-175px); }
+.bg-tile.right { transform: translateX(175px); }
