@@ -11,15 +11,18 @@ h1 { font-size: 5vh; }
 h5 { font-size: 2vh; }
 h1, h5 { text-align: center; }
 
-h1, h5, #scores {
+h1, h5, #scores, #mobile-options h4, #mobile-options label {
 	color: #fff;
 	text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
+#mobile-options label {	text-shadow: -0.5px -0.5px 0 #000, 0.5px -0.5px 0 #000, -0.5px 0.5px 0 #000, 0.5px 0.5px 0 #000; }
+#mobile-options .img-label { font-size: 18px; }
 
 main {
 	width: max-content;
 	margin: auto;
 	--size: 65vh;
+	padding-top: 20px;
 }
 
 #board {
@@ -182,7 +185,7 @@ input[type="checkbox"], input[type="radio"] {
 	margin-right: 3px;
 	vertical-align: middle;
 	border-radius: 25%;
-	background-color: #ccc;
+	background-color: #ddd;
 	cursor: pointer;
 }
 
@@ -255,13 +258,21 @@ input[type="radio"] {
 #mobile-options { display: none; }
 
 @media screen and (max-width: 1000px) {
+	main { --size: 60vh; }
+	.img-label { font-size: calc(var(--size) / 45)}
+}
+
+@media screen and (max-width: 600px) {
 	h1 { font-size: 30px; }
 	h5 { font-size: 10px; }
 
 	#mobile-options { display: block; }
 	#image-select, #settings { display: none; }
 
-	main { --size: 95vw; }
+	main {
+		--size: 95vw;
+		padding-bottom: calc((100vh - var(--size)) / 2 - 75px);
+	}
 
 	#scores { width: 100%; }
 
