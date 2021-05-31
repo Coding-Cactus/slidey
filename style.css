@@ -321,7 +321,7 @@ input[type="radio"] {
 }
 
 .bg-blank {
-	background-color: transparent !important;
+	background: none !important;
 }
 
 .bg-tile.up { transform: translateY(-175px); }
