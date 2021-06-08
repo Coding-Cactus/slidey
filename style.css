@@ -77,6 +77,7 @@ main {
 .tile.left { transform: translateX(calc(var(--size) / var(--mode) * -1 + var(--spacing))); }
 .tile.up { transform: translateY(calc(var(--size) / var(--mode) * -1 + var(--spacing))); }
 .tile.down { transform: translateY(calc(var(--size) / var(--mode) - var(--spacing))); }
+.tile.right, .tile.left, .tile.down, .tile.up { pointer-events: none; }
 
 .x3 .row .col4, .x3 .row .col5, .x3 #row4, .x3 #row5, .x4 .row .col5, .x4 #row5 { display: none !important; }
 

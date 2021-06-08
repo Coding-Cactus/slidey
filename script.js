@@ -9,6 +9,7 @@ window.onload = () => {
 
 	let soundOn = true;
 	let animationOn = true;
+	let backgroundOn = true;
 
 	function soundToggle() {
 		soundOn = !soundOn;
@@ -16,16 +17,32 @@ window.onload = () => {
 		document.getElementById("sound2").checked = soundOn;
 	}
 
-	function animationToggle() {		
+	function animationToggle() {
 		animationOn = !animationOn;
 		document.getElementById("animation").checked = animationOn;
 		document.getElementById("animation2").checked = animationOn;
+	}
+
+	function backgroundToggle() {
+		backgroundOn = !backgroundOn;
+		document.getElementById("background-toggle").checked = backgroundOn;
+		document.getElementById("background-toggle2").checked = backgroundOn;
+		if (backgroundOn) {
+			background();
+		} else {
+			clearInterval(bgInterval);
+			document.getElementById("background").innerHTML = "";
+		}
+
 	}
 
 	document.getElementById("sound").addEventListener("change", soundToggle);
 	document.getElementById("sound2").addEventListener("change", soundToggle);
 	document.getElementById("animation").addEventListener("change", animationToggle);
 	document.getElementById("animation2").addEventListener("change", animationToggle);
+	document.getElementById("background-toggle").addEventListener("change", backgroundToggle);
+	document.getElementById("background-toggle2").addEventListener("change", backgroundToggle);
+
 
 	function radioChange(e) {
 		const id = e.target.id;
@@ -342,101 +359,103 @@ window.onload = () => {
 
 	let bgInterval;
 	function background() {
-		document.getElementById("background").innerHTML = "";
-		clearInterval(bgInterval);
+		if (backgroundOn) {
+			document.getElementById("background").innerHTML = "";
+			clearInterval(bgInterval);
 
-		const cols = Math.ceil(window.innerWidth / 175);
-		const rows = Math.ceil(window.innerHeight / 175);
-		const randBlank = Math.floor(Math.random() * (cols*rows));
+			const cols = Math.ceil(window.innerWidth / 175);
+			const rows = Math.ceil(window.innerHeight / 175);
+			const randBlank = Math.floor(Math.random() * (cols*rows));
 
-		const colours = ["#cc0000bb", "#00cc00bb", "#0000ccbb", "#cccc00bb", "#cc00ccbb", "#00ccccbb"]
-		for (let r = 1; r <= rows; r++) {
-			let row = document.createElement("div");
-			row.id = "bg-row"+r;
-			row.className = "bg-row"
-			document.getElementById("background").appendChild(row);
-			for (let c = 1; c <= cols; c++) {
-				let col = document.createElement("div");
-				document.getElementById("bg-row"+r).appendChild(col);
+			const colours = ["#cc0000bb", "#00cc00bb", "#0000ccbb", "#cccc00bb", "#cc00ccbb", "#00ccccbb"]
+			for (let r = 1; r <= rows; r++) {
+				let row = document.createElement("div");
+				row.id = "bg-row"+r;
+				row.className = "bg-row"
+				document.getElementById("background").appendChild(row);
+				for (let c = 1; c <= cols; c++) {
+					let col = document.createElement("div");
+					document.getElementById("bg-row"+r).appendChild(col);
+				}
 			}
-		}
 
-		for (let r = 1; r <= rows; r++) {
-			for (let c = 1; c <= cols; c++) {
-				col = document.getElementById("bg-row"+r).children[c-1];
-				if ((r-1)*cols + c !== randBlank) {
-					col.className = "bg-tile bg-col" + c;					
-					colour1 = colours[Math.floor(Math.random() * colours.length)];
-					colour2 = colours[Math.floor(Math.random() * colours.length)];
-					while (colour1 == colour2) {
+			for (let r = 1; r <= rows; r++) {
+				for (let c = 1; c <= cols; c++) {
+					col = document.getElementById("bg-row"+r).children[c-1];
+					if ((r-1)*cols + c !== randBlank) {
+						col.className = "bg-tile bg-col" + c;					
 						colour1 = colours[Math.floor(Math.random() * colours.length)];
 						colour2 = colours[Math.floor(Math.random() * colours.length)];
+						while (colour1 == colour2) {
+							colour1 = colours[Math.floor(Math.random() * colours.length)];
+							colour2 = colours[Math.floor(Math.random() * colours.length)];
+						}
+						col.style.background = "linear-gradient("+Math.floor(Math.random() * 360)+"deg,"+colour1+","+colour2+")";
+					} else {
+						col.className = "bg-tile bg-blank bg-col"+c;
 					}
-					col.style.background = "linear-gradient("+Math.floor(Math.random() * 360)+"deg,"+colour1+","+colour2+")";
-				} else {
-					col.className = "bg-tile bg-blank bg-col"+c;
 				}
 			}
-		}
 
-		let last_direction;
-		bgInterval = setInterval(() => {
-			const blank = document.querySelector(".bg-blank");
-			const blankRow = Number(blank.parentElement.id.replace("bg-row", ""));
-			const blankCol = Number(blank.className.replace("bg-tile bg-blank bg-col", ""));
-			let moved = false;
-			while (!moved) {
-				let direction = Math.floor(Math.random() * 4);
-				while (direction === 3-last_direction) {
-					direction = Math.floor(Math.random() * 4);
+			let last_direction;
+			bgInterval = setInterval(() => {
+				const blank = document.querySelector(".bg-blank");
+				const blankRow = Number(blank.parentElement.id.replace("bg-row", ""));
+				const blankCol = Number(blank.className.replace("bg-tile bg-blank bg-col", ""));
+				let moved = false;
+				while (!moved) {
+					let direction = Math.floor(Math.random() * 4);
+					while (direction === 3-last_direction) {
+						direction = Math.floor(Math.random() * 4);
+					}
+					if (direction === 0 && blankRow < rows) {
+						moved = true;
+						let tile = document.getElementById("bg-row"+String(blankRow + 1)).children[blankCol-1];
+						tile.className += " up";
+						setTimeout(() => {
+							blank.style.background = tile.style.background;
+							blank.className = "bg-tile bg-col"+blankCol;
+							tile.className = "bg-tile bg-blank bg-col"+blankCol;
+							tile.background = "";
+							last_direction = direction;
+						}, 500);
+					} else if (direction === 1 && blankCol < cols) {
+						moved = true;
+						let tile = document.getElementById("bg-row"+blankRow).children[blankCol];
+						tile.className += " left";
+						setTimeout(() => {
+							blank.style.background = tile.style.background;
+							blank.className = "bg-tile bg-col"+blankCol;
+							tile.className = "bg-tile bg-blank bg-col"+(blankCol+1);
+							tile.background = "";
+							last_direction = direction;
+						}, 500);
+					} else if (direction === 2 && blankCol > 1) {
+						moved = true;
+						let tile = document.getElementById("bg-row"+blankRow).children[blankCol-2];
+						tile.className += " right";
+						setTimeout(() => {
+							blank.style.background = tile.style.background;
+							blank.className = "bg-tile bg-col"+blankCol;
+							tile.className = "bg-tile bg-blank bg-col"+(blankCol-1);
+							tile.background = "";
+							last_direction = direction;
+						}, 500);
+					} else if (direction === 3 && blankRow > 1) {
+						moved = true;
+						let tile = document.getElementById("bg-row"+String(blankRow - 1)).children[blankCol-1];
+						tile.className += " down";
+						setTimeout(() => {
+							blank.style.background = tile.style.background;
+							blank.className = "bg-tile bg-col"+blankCol;
+							tile.className = "bg-tile bg-blank bg-col"+blankCol;
+							tile.background = "";
+							last_direction = direction;
+						}, 500);
+					}
 				}
-				if (direction === 0 && blankRow < rows) {
-					moved = true;
-					let tile = document.getElementById("bg-row"+String(blankRow + 1)).children[blankCol-1];
-					tile.className += " up";
-					setTimeout(() => {
-						blank.style.background = tile.style.background;
-						blank.className = "bg-tile bg-col"+blankCol;
-						tile.className = "bg-tile bg-blank bg-col"+blankCol;
-						tile.background = "";
-						last_direction = direction;
-					}, 500);
-				} else if (direction === 1 && blankCol < cols) {
-					moved = true;
-					let tile = document.getElementById("bg-row"+blankRow).children[blankCol];
-					tile.className += " left";
-					setTimeout(() => {
-						blank.style.background = tile.style.background;
-						blank.className = "bg-tile bg-col"+blankCol;
-						tile.className = "bg-tile bg-blank bg-col"+(blankCol+1);
-						tile.background = "";
-						last_direction = direction;
-					}, 500);
-				} else if (direction === 2 && blankCol > 1) {
-					moved = true;
-					let tile = document.getElementById("bg-row"+blankRow).children[blankCol-2];
-					tile.className += " right";
-					setTimeout(() => {
-						blank.style.background = tile.style.background;
-						blank.className = "bg-tile bg-col"+blankCol;
-						tile.className = "bg-tile bg-blank bg-col"+(blankCol-1);
-						tile.background = "";
-						last_direction = direction;
-					}, 500);
-				} else if (direction === 3 && blankRow > 1) {
-					moved = true;
-					let tile = document.getElementById("bg-row"+String(blankRow - 1)).children[blankCol-1];
-					tile.className += " down";
-					setTimeout(() => {
-						blank.style.background = tile.style.background;
-						blank.className = "bg-tile bg-col"+blankCol;
-						tile.className = "bg-tile bg-blank bg-col"+blankCol;
-						tile.background = "";
-						last_direction = direction;
-					}, 500);
-				}
-			}
-		}, 1000);
+			}, 1000);
+		}
 	}
 	background();
 	window.addEventListener("resize", background);
